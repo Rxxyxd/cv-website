@@ -1,4 +1,4 @@
-# cv-website
+# CV-Website - Joshua Abbey
 This website will be hosted at http://www.joshuaabbey.com
 ## To-do list
 Tasks to complete:
