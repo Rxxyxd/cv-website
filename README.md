@@ -4,6 +4,8 @@ This website will be hosted at http://www.joshuaabbey.com
 Tasks to complete:
 * Static website with a basic http server using base go libraries (net/http)
 * Add SSL Certificates and allow connection via HTTPS
+* Setup NGINX on server and commit config files
+* Disable TLS 1.0 and 1.1
 * Implement gin web framework
 * Create an api for the Contact Us form and store values into a database
 * Implement an admin panel to change the values of index.html without having to directly change the HTML file. For e.g. - Bodies of text and Headers
