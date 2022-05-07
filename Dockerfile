@@ -1,4 +1,5 @@
 FROM golang:1.18.1-alpine
+EXPOSE 8080/tcp
 RUN mkdir /app
 RUN apk add git
 COPY . /app
