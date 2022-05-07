@@ -1,7 +1,7 @@
 /* hero background image */
 
 .bgimage {
-    height: 100vh;
+    height:40vh;
     background: url('images/heroImage.jpg');
     background-size:cover;
     position:relative;
@@ -11,7 +11,7 @@
     font-size: 4.5rem;
 }
 .hero_desc {
-    font-size: 2rem;
+    font-size: 0.9rem;
 }
 .hero-text {
     text-align: center;
@@ -50,6 +50,9 @@
 .fab {
     color: #000000;
 }
+.Links {
+    color: white;
+}
 /* footer styling */
 #footer {
     background-color: #808080;
@@ -63,4 +66,8 @@
 }
 #contact {
     padding-bottom: 4rem;
+}
+.header-1 {
+    text-align: center;
+    margin-top: 2rem;
 }
