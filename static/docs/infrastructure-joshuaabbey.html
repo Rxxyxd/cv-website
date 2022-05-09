@@ -53,23 +53,25 @@
     </section>
     <!-- Title and Post section-->
     <section id="TitlePost">
-        <div class="header-1">
+        <div class="doc-header">
             <h1> About </h1>
         </div>
-        <div class="subtext-1">
-            <p>To be added.</p>
+        <div class="doc-subtext-1">
+            <p>This doc will talk about how and why I edited certain configuration files to work how I wanted them to.</p>
+        </div>
+        <div class="doc-header">
+            <h1>DNS Configuration </h1>
+        </div>
+        <div class="doc-subtext-2">
+            <p> I used he.net to point the name server from namecheap.com to he.net as a preferred way to change the DNS settings of the domain. I wanted to make sure that everything I wanted to do worked smoothly so I used dns.he.net. Figure 1 shows the DNS settings I used for this project: </p>
+            <p>Obviously all of the entries of type NS directed the domain to he.net but CNAME of name “www.joshuaabbey.com” directed it to the hostname joshuaabbey.com and the entry of A type “joshuaabbey.com” directed to the hostname 178.79.191.194. The reason why I did this was so that if joshuaabbey.com had the subdomain of www it would redirect to the hostname joshuaabbey.com and ofc joshuaabbey.com would have to redirect to the server IP.</p>
+    
+        </div>
+
+        <div class="doc-subtext-3">
+            
         </div>
     </section>
-    <!-- footer section-->
- <footer id="footer">
-  <div class="container-fluid">
-      <!-- social media icons -->
-      <div class="social-icons mt-4">
-          <a href="https://github.com/Rxxyxd/" target="_blank"><i class="fab fa-github"></i></a>
-          <a href="https://www.linkedin.com/" target="_blank"><i class="fab fa-linkedin"></i></a>
-      </div>
-  </div>
-</footer>
 <script src="script/script.js"></script>
 </body>
 </html>
