@@ -43,7 +43,6 @@
 .social-icons {
     font-size: 36px;
     cursor: pointer;
-    align-items: center;
 }
 .fa-facebook:hover,.fa-instagram:hover,.fa-twitter:hover,.fa-linkedin:hover, .fa-twitch:hover {
     color: #008000;
@@ -53,16 +52,6 @@
 }
 .Links {
     color: white;
-}
-/* footer styling */
-#footer {
-    background-color: #808080;
-    text-align: center;
-    bottom: 0;
-    left: 0;
-    position: absolute;
-    width: 100%;
-    height: 5%;
 }
 
 /* spacing on all sections */

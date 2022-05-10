@@ -18,3 +18,11 @@ func main() {
 		fmt.Println(err)
 	}
 }
+
+func initDB() {
+	var err error
+	db, err = sql.Open("postgres", "dbname=jacom sslmode=disable")
+	if err != nil {
+		panic(err)
+	}
+}
