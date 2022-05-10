@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Joshua Abbey</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- linking css file -->
+  <link rel="stylesheet" href="style.css">
+  <!-- bootstrap CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- font awesome -->
+  <script src="https://kit.fontawesome.com/d766f2c6f7.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <!-- load javascript after loading all html content -->
+    <nav class="navbar navbar-dark navbar-expand-lg fixed-top navbarScroll">
+      <div class="container">
+          <a class="navbar-brand" href="https://www.joshuaabbey.com">Joshua Abbey</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav ms-auto">
+                  <li class="nav-item active">
+                      <a class="nav-link" href="https://www.joshuaabbey.com/#home">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="https://joshuaabbey.com/#about">About</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="https://www.joshuaabbey.com/#portfolio">Portfolio</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link" href="https://www.joshuaabbey.com/#contact">Contact</a>
+                  </li>
+              </ul>
+              
+          </div>
+      </div>
+  </nav>
+    <!-- main banner-->
+    <section class="bgimage" id="home">
+      <div class="container-fluid">
+        <div class="row">
+        <div class="col-lg-12 col-md-12 col-xs-12 hero-text">
+          <h2 class="hero-title"><strong>Reference infrastructure for joshuaabbey.com</strong></h2>
+          <p class="hero_desc">Useful links: <a class="Links" href="https://github.com/Rxxyxd/infrastructure-joshuaabbey.com">Github</a>  <a class="Links" href="https://www.joshuaabbey.com">Website</a>  <a class="Links" href="https://nginx.org/en/docs/">Nginx docs</a></p>
+        </div>
+        </div>
+      </div>
+    </section>
+    <!-- Title and Post section-->
+    <section id="TitlePost">
+        <div class="doc-header">
+            <h1> About </h1>
+        </div>
+        <div class="doc-subtext-1">
+            <p>The backing for my website was done from a cleanly installed Ubuntu VPS, with no pre-installed packages relating to domain, ssl, docker or serving of http content, the steps that I took to let my site be reachable are documented below.</p>
+        </div>
+        <div class="doc-header">
+            <h1>Nameserver configuration </h1>
+        </div>
+        <div class="doc-subtext-2">
+            <p>At this point I wanted to use namecheap which was were I purchased my domain, unfortunately I could not use this service as there was no viable plugin for either certbot or acme.sh (mainly due to a restriction on API use for new accounts). Instead to work around this issue I created an account with dns.he.net and changed my NS pointers on namecheap to reference ns1-5 on he.net, allowing for acme.sh to be used to provision ssl certificates as it has a plugin for the service.</p>
+            <p>In figure 1.1 is a visual of my DNS record layout/rollout in respect of my domain “joshuaabbey.com”. Initially I added a simple ‘A’ record that points my primary domain joshuaabbey.com to my server instance at 178.79.191.194, this is then followed by a CNAME (Canonical Name) record so to the commonly referenced to www prefix, or as a subdomain “www.joshuaabbey.com”. In effect this makes both the non pre-fixed joshuaabbey.com and prefix attached www.joshuaabbey.com answerable by the same webserver and serve the same site.</p>
+    
+        </div>
+        <div class="doc-header-2">
+            <h1>Acme.sh and automation</h1>
+        </div>
+        <div class="doc-subtext-3">
+            <p>To issue the SSL certificates I used acme.sh client which implemented a fully fledged Automatic Certificate Management Environment client using zerossl brokers, I used wildcard validation using nameserver lookups. I also added the generated script <a href="https://github.com/Rxxyxd/infrastructure-joshuaabbey.com/blob/main/genssl.sh">genssl.sh</a> and added this to cron, which will keep my site available with an A+ <a href="https://github.com/Rxxyxd/infrastructure-joshuaabbey.com/blob/main/ssllabs_results.png">results</a> at all times.</p>
+            <p>For point of demonstration HE_Username and HE_Password are kept out of the image due to the security implications, I also have made it so these are actually included from a file that is outside of the scope of the git repository that stores these files to disallow any accidental inclusion. The final place in the script which is built using and ‘&&’ tags so the list is only progressed on success is the reload of nginx, which will allow it to change to a new SSL certificate without stopping the service.</p>
+        </div>
+        <div class="doc-header-3">
+            <h1>Nginx and Proxy Pass</h1>
+        </div>
+        <div class="doc-subtext-4">
+            <p><a href="https://github.com/Rxxyxd/infrastructure-joshuaabbey.com/blob/main/nginx/nginx.conf">Here</a>, Is the nginx.conf file I created to allow passing requests through my outeredge network to my dockerized application and website.</p>
+            <p>I set ssl_buffer_size to 8k opposed to its default, 16k to minimise Time To First Byte and reduce latency of response. This inherently makes multi-connect browser loading far faster and opens the gateway for stateless horizontal scaling. I also added resolver 8.8.8.8 simply to rely on Google's trusted international nameserver network for any reverse lookups that need to happen for logging.</p>
+        </div>
+        <div class="doc-header-4">
+            <h1>Docker-Compose</h1>
+        </div>
+        <div class="doc-subtext-5">
+            <p>For my docker-compose.yml I composed a basic container launch system derived from established go base images from the official repository and added my own work on top so having not to rewrite the entire structure from base. In this segment I also learned about the utilisation of docker-compose.override.yml as well as the inherence of .env files within the build files via Dockerfile’s the finished docker-compose which I consider production read is <a href="https://github.com/Rxxyxd/infrastructure-joshuaabbey.com/blob/main/docker-compose.yml">here</a></p>
+        </div>
+    </section>
+    <footer id="footer">
+        <div class="container-fluid">
+            <!-- social media icons -->
+            <div class="social-icons mt-4">
+                <a href="https://github.com/Rxxyxd/" target="_blank"><i class="fab fa-github"></i></a>
+                <a href="https://www.linkedin.com/in/joshua-a-b5226a132/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            </div>
+        </div>
+      </footer>
+<script src="script/script.js"></script>
+</body>
+</html>
